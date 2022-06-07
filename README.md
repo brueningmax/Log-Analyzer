@@ -1,6 +1,8 @@
 Exercise description
+
 Kindly write a command line tool to analyze the content of log files. The tool should accept arguments as input and return
 an output after having performed operations on the given input.
+
 Requirements:
 - Python >= 3.7
 - Please provide a Dockerfile in your solution with the application as its entry point
