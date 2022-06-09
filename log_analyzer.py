@@ -1,4 +1,4 @@
-import os, json, argparse
+import os, json, argparse, gzip
 import pandas as pd
 from pathlib import Path
 
@@ -91,7 +91,11 @@ for file in file_list:
     list_of_lists = []
     index = 0
     bad_lines = {}
-    a_file = open(file, 'r', encoding="utf8")
+    name, extension = os.path.splitext(file)
+    if extension in ['.gz']:
+        a_file = gzip.open(file, 'rt', encoding="utf8")
+    else:
+        a_file = open(file, 'r', encoding="utf8")
 
     for line in a_file:
         index += 1
@@ -120,8 +124,8 @@ for file in file_list:
     if len(bad_lines) > 0:
         output['BAD LINES, PLEASE CHECK'] = bad_lines
 
-
     jsonString = json.dumps(output)
+
     jsonFile = open(f'{args.output_path}{str(file_processed)}_summary.json' if args.output_path else str(
         file_processed) + '_summary.json', "w")
     jsonFile.write(jsonString)
