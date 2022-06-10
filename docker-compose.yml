@@ -3,10 +3,4 @@ version: '3'
 services:
   log_analyzer:
     image: log_analyzer:latest
-    volumes:
-      - /data:/data
-
     command: 'tail -f /dev/null'
-
-volumes:
-  data:

@@ -66,13 +66,13 @@ def get_events_per_second(df):
     return float(count_row / timeframe)
 
 
-# ASSUMPTION: Preferred behavior is returning most frequent IPs in a list so if two repeat the same amount of time, both will be listed
+# ASSUMPTION: Preferred behavior is returning most frequent IPs in a list so if multiple repeat the same amount of time, all will be listed
 def get_most_frequent_IPs(df):
     most_frequent_IP = df['destination_IP'].mode().tolist()
     most_frequent_client_IP = df['client_IP'].mode().tolist()
     return {'destination_IP': most_frequent_IP, 'client_IP': most_frequent_client_IP}
 
-# ASSUMPTION: Preferred behavior is returning most frequent IPs in a list so if two repeat the same amount of time, both will be listed
+# ASSUMPTION: Preferred behavior is returning most frequent IPs in a list so if multiple repeat the same amount of time, all will be listed
 def get_least_frequent_IPs(df):
     max = df['client_IP'].value_counts()
     least_client_IPs = []
@@ -101,10 +101,10 @@ elif os.path.isfile(args.path):
 if not any([args.most_frequent_ip, args.least_frequent_ip, args.events_per_second, args.bytes]):
     args.most_frequent_ip = args.least_frequent_ip = args.events_per_second = args.bytes = True
 
-# ASSUMPTION: when providing a directory path, we should create a file per input file
 if len(file_list) == 0:
     print('Entered file path is not valid or does not contain valid files.')
 else:
+# ASSUMPTION: when providing a directory path, we should create a file per input file
     for file in file_list:
         file_processed = (os.path.basename(file))
         list_of_lists = []
@@ -137,7 +137,6 @@ else:
             output['events_per_second'] = get_events_per_second(df)
 
 # ASSUMPTION: for IPs we want to list both client and destination IPs
-
         if args.most_frequent_ip:
             most_frequent = get_most_frequent_IPs(df)
             output['most_frequent_client_IP'] = most_frequent['client_IP']
